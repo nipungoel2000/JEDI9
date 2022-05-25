@@ -10,11 +10,11 @@ import java.util.Optional;
 
 public interface ProfessorInterfaceDAO {
     public Optional<Professor> validateCredentialsWithDB(String userId,String password) throws ClassNotFoundException, SQLException;
-    public ArrayList<Course> viewCoursesWithDB() throws SQLException, ClassNotFoundException;
+//    public ArrayList<Course> viewCoursesWithDB() throws SQLException, ClassNotFoundException;
 
     public int registerCoursesWithDB(String professorId,String courseId) throws SQLException;
     public ArrayList<Course> viewAvailableCoursesWithDB(String professorId) throws SQLException ;
     public Map<String, ArrayList<String>> viewEnrolledStudentsWithDB(String professorId) throws SQLException;
-    public int provideGrade(int courseId,String studentId,String Grade) throws SQLException;
+    public int provideGrade(String courseId,String studentId,String Grade) throws SQLException;
 
 }

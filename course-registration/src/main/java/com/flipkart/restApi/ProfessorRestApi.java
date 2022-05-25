@@ -12,6 +12,7 @@ import javax.print.attribute.standard.Media;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -39,6 +40,7 @@ public class ProfessorRestApi {
 	
 	@GET
 	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getEmployeeById(@PathParam("id") String userId, @QueryParam("pass") String pass) throws ClassNotFoundException, SQLException {
 		Optional<Professor> prof = profUtil.validateCredentialsWithDB(userId, pass);
 		if(prof.isPresent()) {
@@ -50,10 +52,10 @@ public class ProfessorRestApi {
 	}
 	
 	@GET
-	@Path("/viewAllCourses")
+	@Path("/viewAvailableCourses")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response viewCourses() throws ClassNotFoundException, SQLException {
-		List<Course> courses = profUtil.viewCoursesWithDB();
+	public Response viewCourses(@PathParam("profId") String profId) throws ClassNotFoundException, SQLException {
+		List<Course> courses = profUtil.viewAvailableCoursesWithDB(profId);
 		if(courses!=null) {
 			return Response.ok(courses).build();
 		}
@@ -78,17 +80,15 @@ public class ProfessorRestApi {
 		}
 	}
 	
-	@POST
+	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	@Path("/regCour")
 	public Response registerCourses(@QueryParam("profId") String profId, @QueryParam("courseId") String courseId) throws SQLException {
-//		if(!(currentProf.getId().equals(profId))) {
-//			throw new WebApplicationException(401);
-//		}
+
 		int ok = profUtil.registerCoursesWithDB(profId, courseId);
 		if(ok!=0) {
-			return Response.created(URI.create("/professor/regCour")).entity(ok).build();
+			return Response.created(URI.create("/professor/regCour")).entity("registered succesfully").build();
 		}
 		else {
 			throw new WebApplicationException(400);
@@ -99,10 +99,8 @@ public class ProfessorRestApi {
 	@Path("/assignGrades")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response assignGrades(@QueryParam("professorId") String profId,@QueryParam("courseId") int courseId,@QueryParam("studentId") String studentId,@QueryParam("Grade") String Grade) throws SQLException, IOException {
-//		if(!(currentProf.getId().equals(profId))) {
-//			throw new WebApplicationException(401);
-//		}
+	public Response assignGrades(@QueryParam("professorId") String profId,@QueryParam("courseId") String courseId,@QueryParam("studentId") String studentId,@QueryParam("Grade") String Grade) throws SQLException, IOException {
+
         //check course in it or not
 		int ok = profUtil.provideGrade(courseId, studentId, Grade);
 		if(ok!=0) {
