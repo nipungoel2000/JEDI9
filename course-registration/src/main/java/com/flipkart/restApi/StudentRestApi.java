@@ -66,7 +66,7 @@ public class StudentRestApi {
 	}
 	
 	@GET
-	@Path("/semesterRegistration/{studentId}")
+	@Path("/viewRegisteredCourses/{studentId}")
 //	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response semesterRegistration(@PathParam("studentId") String studId) throws SQLException {

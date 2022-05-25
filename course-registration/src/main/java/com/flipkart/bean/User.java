@@ -11,7 +11,7 @@ public abstract class User {
 	
 	
 	
-	public User(String id, String name, String password, String email) {
+	public User(String id, String name, String email, String password) {
 		super();
 		this.id = id;
 		this.userName = name;
@@ -49,6 +49,16 @@ public abstract class User {
 		this.userName = userName;
 	}
 
+	@JsonProperty
+	public String getPassword() {
+		return password;
+	}
+
+
+	@JsonProperty
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	@JsonProperty
 	public String getEmailId() {
@@ -62,16 +72,7 @@ public abstract class User {
 	}
 
 
-	@JsonProperty
-	public String getPassword() {
-		return password;
-	}
-
-
-	@JsonProperty
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	
 
 
 

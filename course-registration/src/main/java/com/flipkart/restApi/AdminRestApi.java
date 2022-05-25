@@ -87,7 +87,7 @@ public class AdminRestApi {
 	}
 	
 	@DELETE
-	@Path("/dropCourse/{id}")
+	@Path("/deleteCourse/{id}")
 	public Response dropCourse(@PathParam("id") String courseId) {
 		boolean deleted = adminDao.dropCourse(courseId);
 		if(deleted) {

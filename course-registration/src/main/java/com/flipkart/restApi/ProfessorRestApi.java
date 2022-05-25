@@ -54,8 +54,9 @@ public class ProfessorRestApi {
 	@GET
 	@Path("/viewAvailableCourses")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response viewCourses(@PathParam("profId") String profId) throws ClassNotFoundException, SQLException {
+	public Response viewCourses(@QueryParam("profId") String profId) throws ClassNotFoundException, SQLException {
 		List<Course> courses = profUtil.viewAvailableCoursesWithDB(profId);
+		System.out.println("efhvbas");
 		if(courses!=null) {
 			return Response.ok(courses).build();
 		}
