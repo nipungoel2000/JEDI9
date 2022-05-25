@@ -66,7 +66,8 @@ public class AdminDaoImplementation implements AdminDaoInterface{
             	
 				Admin adm = new Admin(rs.getString(1), rs.getString(2), rs.getString(3),rs.getString(4));
 				
-				opt = Optional.of(adm);
+				if(rs.getString(1).charAt(0)=='A')
+					opt = Optional.of(adm);
 			}
         }
         catch(Exception e){
