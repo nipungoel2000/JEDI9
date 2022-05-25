@@ -129,16 +129,69 @@ public class StudentDaoImplementation implements StudentDaoInterface {
     }
 
     @Override
-    public void registerCourses(String studentId, ArrayList<String> courses) throws SQLException {
+    public ArrayList<Boolean> registerCourses(String studentId, ArrayList<String> courses) throws SQLException {
         Connection connection = connectionUtil.getConnection();
+        ArrayList<Boolean> isEnrolled= new ArrayList<>(); 
+        
+        String sql = "SELECT COUNT(*) FROM registrar where id='"+studentId+"'";
+        PreparedStatement alreadyRegdCoursesQuery = connection.prepareStatement(sql); 
+        ResultSet rs = alreadyRegdCoursesQuery.executeQuery();
+        int alreadyRegCourses = 0;
+        if(rs.next())
+        {
+        	alreadyRegCourses = rs.getInt(1);
+        }
         Statement stmt = connection.createStatement();
+        
         for(String courseId:courses) {
+        	if(alreadyRegCourses==4)
+        		break;
+        	
+        	//CHECK IF THAT COURSE IS ALREADY TAKEN BY THIS STUDENT
+//        	String availableSeatsQuerySQL = "SELECT seats from course where courseId = '"+courseId + "'";
+//        	PreparedStatement availableSeatsQuery = connection.prepareStatement(availableSeatsQuerySQL); 
+//            ResultSet resultSet = availableSeatsQuery.executeQuery();
+//            int availableSeats = 0;
+//            if(resultSet.next())
+//            {
+//            	availableSeats = rs.getInt(1);
+//            }  
+//            if(availableSeats==0)
+//            	continue;   	
+        	
+            //Check if Seats are avaiable in the course
+        	String availableSeatsQuerySQL = "SELECT seats from course where courseId = '"+courseId + "'";
+        	PreparedStatement availableSeatsQuery = connection.prepareStatement(availableSeatsQuerySQL); 
+            ResultSet resultSet = availableSeatsQuery.executeQuery();
+            int availableSeats = 0;
+            if(resultSet.next())
+            {	
+            	availableSeats = resultSet.getInt(1);
+            }  
+            if(availableSeats==0)
+            {	
+            	isEnrolled.add(false);
+            	continue;
+            }
+            System.out.println(availableSeats);
+            
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_REGISTERCOURSE_QUERY);
             preparedStatement.setString(1, studentId);
             preparedStatement.setString(2, courseId);
             preparedStatement.setString(3, " NA ");
             preparedStatement.executeUpdate();
+            
+            availableSeats--;
+            System.out.println(availableSeats);
+            String updateSeatsQuerySQL = "UPDATE COURSE set seats=" + Integer.toString(availableSeats) + " where courseId = '" + courseId +"'";
+            PreparedStatement updateSeatsQuery = connection.prepareStatement(updateSeatsQuerySQL);
+            updateSeatsQuery.executeUpdate();
+            alreadyRegCourses += 1;
+            isEnrolled.add(true);
         }
+        while(isEnrolled.size()<4)
+        	isEnrolled.add(false);
+        return isEnrolled;
     }
 
     @Override

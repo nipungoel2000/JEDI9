@@ -3,6 +3,8 @@ package com.flipkart.restApi;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -98,8 +100,13 @@ public class StudentRestApi {
         list.add(c2);
         list.add(c3);
         list.add(c4);
-        studInter.registerCourses(studentId, list);
-        return Response.status(201).entity(list).build();
+        ArrayList<Boolean> isEnrolled = studInter.registerCourses(studentId, list);
+        TreeMap<String,Boolean> courseEnrolled = new TreeMap<>();
+        for(int i=0; i<4; i++)
+        {
+        	courseEnrolled.put(list.get(i), isEnrolled.get(i));
+        }
+        return Response.status(201).entity(courseEnrolled).build();
 	}
 	
 	@GET

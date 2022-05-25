@@ -20,7 +20,7 @@ public interface StudentDaoInterface
 
     ArrayList<String> registeredCoursesList(String studentId) throws SQLException;
 
-    void registerCourses(String studentId,ArrayList<String> list) throws SQLException;
+    ArrayList<Boolean> registerCourses(String studentId,ArrayList<String> list) throws SQLException;
 
     ArrayList<Course> viewCourses() throws SQLException;
 

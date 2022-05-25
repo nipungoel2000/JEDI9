@@ -55,13 +55,18 @@ public class ProfessorDaoImplementation implements ProfessorInterfaceDAO {
     public int provideGrade(String courseId,String studentId,String Grade){
     	
         String SQL = "UPDATE registrar set grade='"+Grade+"' where Id='"+studentId+"' and courseId='"+courseId+"'";
-
         int id = 0;
         //inserting into table
         try(Connection con = connectionUtil.getConnection();){
         	
             PreparedStatement pstmt = con.prepareStatement(SQL); 
             int affectedRows = pstmt.executeUpdate();
+            SQL = "DELETE from registrar where Id='"+studentId+"' and courseId='"+courseId+"'";
+            pstmt = con.prepareStatement(SQL);
+            pstmt.executeUpdate();
+            SQL = "insert into gradecard values ('"+studentId+"', '"+courseId+"', '" + Grade +"')";
+            pstmt = con.prepareStatement(SQL);
+            pstmt.executeUpdate();
             
             // check the affected rows
             if (affectedRows > 0) {
@@ -72,6 +77,7 @@ public class ProfessorDaoImplementation implements ProfessorInterfaceDAO {
         }
         return id;
     }
+
     
     @Override
     public int registerCoursesWithDB(String professorId,String courseId) throws SQLException {
