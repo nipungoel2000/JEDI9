@@ -117,7 +117,7 @@ public class StudentDaoImplementation implements StudentDaoInterface {
     @Override
     public ArrayList<String> registeredCoursesList(String studentId) throws SQLException {
         Connection conn = connectionUtil.getConnection();
-        String sql = "SELECT * FROM registrar where userId='"+studentId+"'";
+        String sql = "SELECT * FROM registrar where id='"+studentId+"'";
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet rs = statement.executeQuery();
         ArrayList<String> courses=new ArrayList<>();
@@ -132,10 +132,10 @@ public class StudentDaoImplementation implements StudentDaoInterface {
     public void registerCourses(String studentId, ArrayList<String> courses) throws SQLException {
         Connection connection = connectionUtil.getConnection();
         Statement stmt = connection.createStatement();
-        for(String course:courses) {
+        for(String courseId:courses) {
             PreparedStatement preparedStatement = connection.prepareStatement(SQLQueriesConstants.ADD_REGISTERCOURSE_QUERY);
             preparedStatement.setString(1, studentId);
-            preparedStatement.setString(2, course);
+            preparedStatement.setString(2, courseId);
             preparedStatement.setString(3, " NA ");
             preparedStatement.executeUpdate();
         }
@@ -153,6 +153,8 @@ public class StudentDaoImplementation implements StudentDaoInterface {
           Course course=new Course();
           course.setCourseId(rs.getString(1));
           course.setCourseName(rs.getString(2));
+          course.setProfId(rs.getString(3));
+          course.setSeats(rs.getInt(4));
           courses.add(course);
         }
         return courses;
@@ -193,7 +195,8 @@ public class StudentDaoImplementation implements StudentDaoInterface {
     public ArrayList<GradeCard> viewGrades(String studentId) throws SQLException {
     ArrayList<GradeCard> gradeCards=new ArrayList<>();
         Connection conn = connectionUtil.getConnection();
-        String sql = "SELECT * FROM registrar where userId='"+studentId+"'";
+        String sql = "SELECT * FROM gradecard where id='"+studentId+"'";
+        System.out.println(sql);
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet rs = statement.executeQuery();
         while(rs.next())

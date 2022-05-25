@@ -1,24 +1,27 @@
 package com.flipkart.bean;
 
 public class GradeCard {
-	private String userId;
+	private String id;
 	private String courseId;
 	private String grade;
 	
-	public GradeCard(String userId, String courseId, String grade) {
+	public GradeCard(String id, String courseId, String grade) {
 		super();
-		this.userId = userId;
+		this.id = id;
 		this.courseId = courseId;
 		this.grade = grade;
 	}
 
-	public String getUserId() {
-		return userId;
+
+	public String getId() {
+		return id;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+
+	public void setId(String id) {
+		this.id = id;
 	}
+
 
 	public String getCourseId() {
 		return courseId;

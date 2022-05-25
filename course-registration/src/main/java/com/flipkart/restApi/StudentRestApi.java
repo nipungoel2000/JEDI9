@@ -65,8 +65,9 @@ public class StudentRestApi {
 		}
 	}
 	
-	@POST
+	@GET
 	@Path("/semesterRegistration/{studentId}")
+//	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response semesterRegistration(@PathParam("studentId") String studId) throws SQLException {
 		List<String> courseList = studInter.registeredCoursesList(studId);
@@ -83,6 +84,8 @@ public class StudentRestApi {
 	
 	@POST
 	@Path("/registerCourses")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response registerCourses(
 			@QueryParam("course1") String c1,
             @QueryParam("course2") String c2,
@@ -100,7 +103,7 @@ public class StudentRestApi {
 	}
 	
 	@GET
-    @Path("/viewReportCard/")
+    @Path("/viewReportCard")
     @Produces(MediaType.APPLICATION_JSON)
     public Response viewReportCard(@QueryParam("studentId") String studentId) {
         ArrayList<GradeCard> gradeCards;
