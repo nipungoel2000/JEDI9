@@ -101,7 +101,7 @@ public class AdminRestApi {
 	
 	@POST
 	@Path("/approveStudent/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public Response approveStudent(@PathParam("id") String studentId) {
 		boolean ok = adminDao.approveStudent(studentId);
 		if(ok) {
