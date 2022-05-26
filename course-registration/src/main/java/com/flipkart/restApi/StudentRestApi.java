@@ -109,6 +109,21 @@ public class StudentRestApi {
         return Response.status(201).entity(courseEnrolled).build();
 	}
 	
+	@POST
+	@Path("/dropCourses")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response dropCourse(
+			@QueryParam("course") String c1,
+            @QueryParam("studentId") String studentId
+            ) throws SQLException {
+        
+        Boolean isDropped = studInter.dropCourse(studentId, c1);
+        TreeMap<String,Boolean> courseDropped = new TreeMap<>();
+        courseDropped.put(c1, isDropped);
+        return Response.status(201).entity(courseDropped).build();
+	}
+	
 	@GET
     @Path("/viewReportCard")
     @Produces(MediaType.APPLICATION_JSON)

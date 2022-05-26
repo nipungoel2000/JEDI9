@@ -114,59 +114,59 @@ public class AdminDaoImplementation implements AdminDaoInterface{
         return ok;
     }
 
-    @Override
-    public boolean approveStudents() {
-        boolean ok = true;
-        try{
-            Connection con = connectionUtil.getConnection();
-            Statement stmt = con.createStatement();
-            if(con==null)System.out.println("connection not established");
-            Scanner in= new Scanner(System.in);
-            int ch =1;
-            while(ch!=0) {
-                String sql = "select * from student where isApproved= 0";
-                ResultSet rs = stmt.executeQuery(sql);
-                int flag=0;
-                System.out.println("Here is a list of all pending students ++++++++++++");
-                while (rs.next()) {
-                    int sId = rs.getInt(1);
-                    System.out.println(rs.getInt(1));
-                    flag=1;
-//                String s = "select * from user where userId = " +sId;
-//                Statement st = con.createStatement();
-//                ResultSet r = st.executeQuery(s);
-//                System.out.println(r.getString(3)+ " " +r.getString(4));
-                }
-                if(flag==1) {
-                    System.out.println("Enter student id");
-                    int id = in.nextInt();
-                    sql = "UPDATE student SET isApproved = 1 where studentId = " + id;
-                    stmt.executeUpdate(sql);
-                }
-                else{
-                    System.out.println("<<<<<<< No student left to be approved >>>>>>>>>>>");
-                }
-                System.out.println("To exit, press 0 : To continue, press 1");
-                ch = in.nextInt();
-            }
-        } catch (SQLException e) {
-            ok = false;
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return ok;
-    }
-    public boolean isApproved(String studentId) throws Exception{
-        Connection con = connectionUtil.getConnection();
-        String sql = "select * from student where studentId=? and isApproved = 1";
-        PreparedStatement stmt = con.prepareStatement(sql);
-        stmt.setString(1,studentId);
-        ResultSet rs =  stmt.executeQuery();
-        while(rs.next()) {
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    public boolean approveStudents() {
+//        boolean ok = true;
+//        try{
+//            Connection con = connectionUtil.getConnection();
+//            Statement stmt = con.createStatement();
+//            if(con==null)System.out.println("connection not established");
+//            Scanner in= new Scanner(System.in);
+//            int ch =1;
+//            while(ch!=0) {
+//                String sql = "select * from student where isApproved= 0";
+//                ResultSet rs = stmt.executeQuery(sql);
+//                int flag=0;
+//                System.out.println("Here is a list of all pending students ++++++++++++");
+//                while (rs.next()) {
+//                    int sId = rs.getInt(1);
+//                    System.out.println(rs.getInt(1));
+//                    flag=1;
+////                String s = "select * from user where userId = " +sId;
+////                Statement st = con.createStatement();
+////                ResultSet r = st.executeQuery(s);
+////                System.out.println(r.getString(3)+ " " +r.getString(4));
+//                }
+//                if(flag==1) {
+//                    System.out.println("Enter student id");
+//                    int id = in.nextInt();
+//                    sql = "UPDATE student SET isApproved = 1 where studentId = " + id;
+//                    stmt.executeUpdate(sql);
+//                }
+//                else{
+//                    System.out.println("<<<<<<< No student left to be approved >>>>>>>>>>>");
+//                }
+//                System.out.println("To exit, press 0 : To continue, press 1");
+//                ch = in.nextInt();
+//            }
+//        } catch (SQLException e) {
+//            ok = false;
+//            System.out.println(e.getMessage());
+//            e.printStackTrace();
+//        }
+//        return ok;
+//    }
+//    public boolean isApproved(String studentId) throws Exception{
+//        Connection con = connectionUtil.getConnection();
+//        String sql = "select * from student where studentId=? and isApproved = 1";
+//        PreparedStatement stmt = con.prepareStatement(sql);
+//        stmt.setString(1,studentId);
+//        ResultSet rs =  stmt.executeQuery();
+//        while(rs.next()) {
+//            return true;
+//        }
+//        return false;
+//    }
     
     @Override
     public boolean approveStudent(String studentId){

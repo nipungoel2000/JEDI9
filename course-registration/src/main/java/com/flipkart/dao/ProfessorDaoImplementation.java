@@ -113,7 +113,6 @@ public class ProfessorDaoImplementation implements ProfessorInterfaceDAO {
     @Override
     public ArrayList<Course> viewAvailableCoursesWithDB(String professorId){
         ArrayList<Course> courses=new ArrayList<Course>();
-        System.out.println("ewgfwbvv");
         try(Connection con = connectionUtil.getConnection();){
 	        String sql="select * from course where profId= 'null'";
 	        PreparedStatement statement = con.prepareStatement(sql);

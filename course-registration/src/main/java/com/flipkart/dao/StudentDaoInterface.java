@@ -14,9 +14,9 @@ public interface StudentDaoInterface
 
     Optional<Student> getStudent(String studentId) throws SQLException;
 
-    Optional<Student> validateCredentials(String studentId, String password);
+//    Optional<Student> validateCredentials(String studentId, String password);
 
-    String getfeeStatus(String studentId) throws SQLException;
+//    String getfeeStatus(String studentId) throws SQLException;
 
     ArrayList<String> registeredCoursesList(String studentId) throws SQLException;
 
@@ -24,10 +24,12 @@ public interface StudentDaoInterface
 
     ArrayList<Course> viewCourses() throws SQLException;
 
-    Course viewCourse(int courseId) throws SQLException;
+//    Course viewCourse(int courseId) throws SQLException;
 
-    String removeStudent(String studentId) throws SQLException;
+//    String removeStudent(String studentId) throws SQLException;
 
     ArrayList<GradeCard> viewGrades(String studentId) throws SQLException;
+    
+    Boolean dropCourse(String studentId, String c1);
 
 }

@@ -14,7 +14,7 @@ public interface AdminDaoInterface {
     }
 	public boolean addCourse(Course course);
 	public boolean dropCourse(String string);
-	public boolean approveStudents();
+//	public boolean approveStudents();
 	public boolean approveStudent(String studentId);
     public Optional<Admin> validateCredentials(String adminId, String password);
 

@@ -79,40 +79,40 @@ public class StudentDaoImplementation implements StudentDaoInterface {
         }
         return opt;
     }
-
-    public Optional<Student> validateCredentials(String studentId, String password){
-    	Optional<Student> student = Optional.empty();
-        try(Connection conn = connectionUtil.getConnection();){
-            
-            String sql = "SELECT * FROM user where userid = ? and password = ?";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1,studentId);
-            statement.setString(2,password);
-            ResultSet rs = statement.executeQuery();
-            if(rs.next())
-            {
-                student= getStudent(studentId);
-                //  Student student=new Student(studentId,rs1.getString(3),rs1.getString(4), rs1.getString(2),rs1.getString(5),studentId,rs.getInt(2),rs.getString(3),rs.getString(4),true);
-                
-            }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-        return student;
-    }
-    @Override
-    public String getfeeStatus(String studentId) throws SQLException {
-        Connection conn = connectionUtil.getConnection();
-        String sql = "SELECT paymentId FROM bookkeeper where studentId='"+studentId+"'";
-        PreparedStatement statement = conn.prepareStatement(sql);
-        ResultSet rs = statement.executeQuery();
-        while(rs.next())
-        {String x = "Fees Paid";
-            return x;
-        }
-        return "Fees not paid";
-    }
+//
+//    public Optional<Student> validateCredentials(String studentId, String password){
+//    	Optional<Student> student = Optional.empty();
+//        try(Connection conn = connectionUtil.getConnection();){
+//            
+//            String sql = "SELECT * FROM user where userid = ? and password = ?";
+//            PreparedStatement statement = conn.prepareStatement(sql);
+//            statement.setString(1,studentId);
+//            statement.setString(2,password);
+//            ResultSet rs = statement.executeQuery();
+//            if(rs.next())
+//            {
+//                student= getStudent(studentId);
+//                //  Student student=new Student(studentId,rs1.getString(3),rs1.getString(4), rs1.getString(2),rs1.getString(5),studentId,rs.getInt(2),rs.getString(3),rs.getString(4),true);
+//                
+//            }
+//        }
+//        catch(Exception e){
+//            System.out.println(e);
+//        }
+//        return student;
+//    }
+//    @Override
+//    public String getfeeStatus(String studentId) throws SQLException {
+//        Connection conn = connectionUtil.getConnection();
+//        String sql = "SELECT paymentId FROM bookkeeper where studentId='"+studentId+"'";
+//        PreparedStatement statement = conn.prepareStatement(sql);
+//        ResultSet rs = statement.executeQuery();
+//        while(rs.next())
+//        {String x = "Fees Paid";
+//            return x;
+//        }
+//        return "Fees not paid";
+//    }
 
     @Override
     public ArrayList<String> registeredCoursesList(String studentId) throws SQLException {
@@ -212,37 +212,37 @@ public class StudentDaoImplementation implements StudentDaoInterface {
         }
         return courses;
     }
-
-    @Override
-    public Course viewCourse(int courseId) throws SQLException {
-        ArrayList<Course> courses=new ArrayList<Course>();
-        Connection conn = connectionUtil.getConnection();
-        String sql = "SELECT * FROM course where courseId="+courseId;
-        PreparedStatement statement = conn.prepareStatement(sql);
-        ResultSet rs = statement.executeQuery();
-        while(rs.next())
-        {
-            Course course=new Course();
-            course.setCourseId(rs.getString(1));
-            course.setCourseName(rs.getString(2));
-            return course;
-        }
-        return null;
-    }
-
-    @Override
-    public String removeStudent(String studentId) throws SQLException {
-
-        boolean st = true;
-            Connection con = connectionUtil.getConnection();
-            Statement stmt = con.createStatement();
-            String sql = "delete from student where studentId = " + studentId;
-        int rowsAffected = stmt.executeUpdate(sql);
-        if (rowsAffected == 1) {
-            return "Student Removed!";
-        }
-        return null;
-    }
+//
+//    @Override
+//    public Course viewCourse(int courseId) throws SQLException {
+//        ArrayList<Course> courses=new ArrayList<Course>();
+//        Connection conn = connectionUtil.getConnection();
+//        String sql = "SELECT * FROM course where courseId="+courseId;
+//        PreparedStatement statement = conn.prepareStatement(sql);
+//        ResultSet rs = statement.executeQuery();
+//        while(rs.next())
+//        {
+//            Course course=new Course();
+//            course.setCourseId(rs.getString(1));
+//            course.setCourseName(rs.getString(2));
+//            return course;
+//        }
+//        return null;
+//    }
+//
+//    @Override
+//    public String removeStudent(String studentId) throws SQLException {
+//
+//        boolean st = true;
+//            Connection con = connectionUtil.getConnection();
+//            Statement stmt = con.createStatement();
+//            String sql = "delete from student where studentId = " + studentId;
+//        int rowsAffected = stmt.executeUpdate(sql);
+//        if (rowsAffected == 1) {
+//            return "Student Removed!";
+//        }
+//        return null;
+//    }
 
     @Override
     public ArrayList<GradeCard> viewGrades(String studentId) throws SQLException {
@@ -258,5 +258,25 @@ public class StudentDaoImplementation implements StudentDaoInterface {
             gradeCards.add(g);
         }
         return gradeCards;
+    }
+    
+    @Override
+    public Boolean dropCourse(String studentId, String c1){
+//    	String dropCourseSQL = "SELECT * from registrar where id = '"+studentId + "' and courseId = '" + c1 +"'";
+//    	Connection conn = connectionUtil.getConnection();
+//    	PreparedStatement dropCourseQuery = conn.prepareStatement(dropCourseSQL); 
+//        ResultSet resultSet = dropCourseQuery.executeQuery();
+//        int availableSeats = 0;
+//        if(resultSet.next())
+//        {	
+//        	availableSeats = resultSet.getInt(1);
+//        }  
+//        if(availableSeats==0)
+//        {	
+//        	isEnrolled.add(false);
+//        	continue;
+//        }
+//        System.out.println(availableSeats);    	
+    	return true;
     }
 }
