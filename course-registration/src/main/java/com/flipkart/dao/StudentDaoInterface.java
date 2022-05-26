@@ -30,6 +30,6 @@ public interface StudentDaoInterface
 
     ArrayList<GradeCard> viewGrades(String studentId) throws SQLException;
     
-    Boolean dropCourse(String studentId, String c1);
+    Boolean dropCourse(String studentId, String c1) throws SQLException;
 
 }

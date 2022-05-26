@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import javax.print.attribute.standard.Media;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -109,8 +110,8 @@ public class StudentRestApi {
         return Response.status(201).entity(courseEnrolled).build();
 	}
 	
-	@POST
-	@Path("/dropCourses")
+	@DELETE
+	@Path("/dropCourse")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response dropCourse(
@@ -119,8 +120,11 @@ public class StudentRestApi {
             ) throws SQLException {
         
         Boolean isDropped = studInter.dropCourse(studentId, c1);
-        TreeMap<String,Boolean> courseDropped = new TreeMap<>();
-        courseDropped.put(c1, isDropped);
+        TreeMap<String,String> courseDropped = new TreeMap<>();
+        if(isDropped)
+        	courseDropped.put(c1, "Course Dropped");
+        else
+        	courseDropped.put(c1, "Course Cannot be Dropped : You didn't opt for it");
         return Response.status(201).entity(courseDropped).build();
 	}
 	

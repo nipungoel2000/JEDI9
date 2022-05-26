@@ -261,22 +261,24 @@ public class StudentDaoImplementation implements StudentDaoInterface {
     }
     
     @Override
-    public Boolean dropCourse(String studentId, String c1){
-//    	String dropCourseSQL = "SELECT * from registrar where id = '"+studentId + "' and courseId = '" + c1 +"'";
-//    	Connection conn = connectionUtil.getConnection();
-//    	PreparedStatement dropCourseQuery = conn.prepareStatement(dropCourseSQL); 
-//        ResultSet resultSet = dropCourseQuery.executeQuery();
-//        int availableSeats = 0;
-//        if(resultSet.next())
-//        {	
-//        	availableSeats = resultSet.getInt(1);
-//        }  
-//        if(availableSeats==0)
-//        {	
-//        	isEnrolled.add(false);
-//        	continue;
-//        }
-//        System.out.println(availableSeats);    	
-    	return true;
+    public Boolean dropCourse(String studentId, String c1) throws SQLException{
+    	
+    	String checkCourseSQL = "SELECT * from registrar where id = '"+studentId + "' and courseId = '" + c1 +"'";
+    	Connection conn = connectionUtil.getConnection();
+    	PreparedStatement checkCourseQuery = conn.prepareStatement(checkCourseSQL); 
+        ResultSet resultSet = checkCourseQuery.executeQuery();
+        if(resultSet.next())
+        {	
+        	String dropCourseSQL = "DELETE from registrar where id = '"+studentId + "' and courseId = '" + c1 +"'";
+        	PreparedStatement dropCourseQuery = conn.prepareStatement(dropCourseSQL);
+            dropCourseQuery.executeUpdate();
+            
+            String updateSeatsSQL = "Update COURSE set seats = seats + 1 where courseId = '" + c1 + "'";
+            PreparedStatement updateSeatsQuery = conn.prepareStatement(updateSeatsSQL);
+            updateSeatsQuery.executeUpdate();
+        	
+            return true;
+        }    	
+    	return false;
     }
 }
